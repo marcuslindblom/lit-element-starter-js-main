@@ -16,11 +16,11 @@ import {Router} from '@lit-labs/router';
 export class MyElement extends LitElement {
   _routes = new Router(this, [
     {
-      path: '/',
-      render: () => html` <h1>Home</h1>`,
+      path: '/dev',
+      render: () => html` <p>Home</p>`,
     },
-    {path: '/projects', render: () => html`<h1>Projects</h1>`},
-    {path: '/about', render: () => html`<h1>About</h1>`},
+    {path: '/dev/projects', render: () => html`<p>Projects</p>`},
+    {path: '/dev/about', render: () => html`<p>About</p>`},
   ]);
   static get styles() {
     return css`
@@ -57,17 +57,23 @@ export class MyElement extends LitElement {
 
   render() {
     return html`
-      <header>...</header>
-      <main>${this._routes.outlet()}</main>
+      <header>
+        <nav>
+          <a href="/dev">Home</a>
+          <a href="/dev/projects">Projects</a>
+          <a href="/dev/about">About</a>
+        </nav>
+      </header>
+      <main>
+        <h1>${this.sayHello(this.name)}!</h1>
+          <button @click=${this._onClick} part="button">
+            Click Count: ${this.count}
+          </button>
+          ${this._routes.outlet()}
+        <slot></slot>
+      </main>
       <footer>...</footer>
     `;
-    // return html`
-    //   <h1>${this.sayHello(this.name)}!</h1>
-    //   <button @click=${this._onClick} part="button">
-    //     Click Count: ${this.count}
-    //   </button>
-    //   <slot></slot>
-    // `;
   }
 
   _onClick() {
